@@ -127,13 +127,19 @@ menu.text_input(menu.my_root(), "Change Title", { "ChangeTitle" }, "", function(
     infoTitle = fuck
 end)
 
+menu.toggle(menu.my_root(), "Disable Top Border", {""}, "", function(on)
+    top_border_toggle = on
+    util.yield()
+end)
+
 util.create_tick_handler(function()
         local mapped_number = map_number(3)
         local mapped_number_text = ((6 - 3) % 5)
-
-        directx.draw_rect(position_change_X, position_change_Y, 0.11 / mapped_number, 0.03 / mapped_number, colors.top_border)
+        if not top_border_toggle then
+            directx.draw_rect(position_change_X, position_change_Y, 0.11 / mapped_number, 0.03 / mapped_number, colors.top_border)
+            directx.draw_text(position_change_X + ((0.11 / mapped_number) / 2), position_change_Y + ((0.03 / mapped_number) / 2), infoTitle, ALIGN_CENTRE, 0.45 / (mapped_number_text / 3.5), colors.subhead, true)
+        end
         directx.draw_rect(position_change_X, position_change_Y + (0.03 / mapped_number), 0.11 / mapped_number, 0.28 / mapped_number, colors.background_rect)
-        directx.draw_text(position_change_X + ((0.11 / mapped_number) / 2), position_change_Y + ((0.03 / mapped_number) / 2), infoTitle, ALIGN_CENTRE, 0.45 / (mapped_number_text / 3.5), colors.subhead, true)
 
         local posX_left = position_change_X + 0.0035
         local player_info_offset = posX_left + (0.1 / mapped_number)
