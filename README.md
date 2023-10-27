@@ -1,10 +1,10 @@
 # Holys-Overlay-V2
 LUA script for stand
 
-Find the default info overlay of stand too ugly or harder to read?
+Find the default info overlay of stand look bad? Are you just too fucking blind to read that plain text?
 Lets fix that by drawing one with LUA.
 
-Enables an info overlay displaying the following:
+Enables an info overlay displaying the following: 
 - Session Type
 - Host
 - Script Host
