@@ -19,4 +19,4 @@ Enables an info overlay displaying the following:
 - Objes Pool
 - Pickup Pool
 
-Old version used a lib that now doesnt work anymore as i intended so now using another way to achieve this. Removed player window due it not being used.
+Old version used a lib that now doesnt work anymore exactly as i intended so now using another way to achieve this. Looks a bit different now so use the one you like most. Removed player window due it not being used.
