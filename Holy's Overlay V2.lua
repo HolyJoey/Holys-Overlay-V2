@@ -42,7 +42,7 @@ local top_color = colors_list:list("Top Border")
 local background_color = colors_list:list("Background Border")
 local toptext_color = colors_list:list("Top Text Border")
 local left_color = colors_list:list("Left Aligned Text")
-local right_color = colors_list:list("Left Aligned Text")
+local right_color = colors_list:list("Right Aligned Text")
 
 -- TOP BORDER COLOR --
 menu.rainbow(
@@ -89,7 +89,7 @@ root:slider("Change Position Y", {"ypos"}, "", 0, 1000, current_position_Y * 100
     position_change_Y = (count/1000)
 end)
 
--- Idk tbh
+-- Damn this looks a lot like Toph's work uhhhhh
 local function SessionType()
     if util.is_session_started() then
         if NETWORK.NETWORK_SESSION_IS_PRIVATE() then
