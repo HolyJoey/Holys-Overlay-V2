@@ -1,12 +1,13 @@
 --[[
     Made by holyjoey.
+    V2.2
     Credits to:
     nova_plays: allowed me to use NovaLay for new base of the overlay.
     Everyone from previous project
 ]]
 
 util.keep_running()
-util.require_natives()
+util.require_natives("3095a")
 
 local colors = {
     background_rect = {r = 0, g = 0, b = 0, a = 175/255},
@@ -14,6 +15,7 @@ local colors = {
     subhead = {r = 1, g = 1, b = 1, a = 1},
     left_aligned_text = {r = 1, g = 1, b = 1, a = 1},
     right_aligned_text = {r = 160/255, g = 160/255, b = 160/255, a = 1.0},
+    border_colour = {r = 1, g = 1, b = 1, a = 1},
 }
 
 function map_number(number)
@@ -38,16 +40,23 @@ end
 
 local root = menu.my_root()
 local colors_list = root:list("Colors")
-local top_color = colors_list:list("Top Border")
+local top_color = colors_list:list("Title Bar Border")
+local overlay_border = colors_list:list("Overlay Border")
 local background_color = colors_list:list("Background Border")
-local toptext_color = colors_list:list("Top Text Border")
+local toptext_color = colors_list:list("Title Text Border")
 local left_color = colors_list:list("Left Aligned Text")
 local right_color = colors_list:list("Right Aligned Text")
 
 -- TOP BORDER COLOR --
 menu.rainbow(
-    top_color:colour("Top Border Color", {}, "", colors.top_border, true, function(color)
+    top_color:colour("Title Bar Color", {}, "", colors.top_border, true, function(color)
     colors.top_border = color
+end))
+
+-- OVERLAY BORDER COLOR --
+menu.rainbow(
+    overlay_border:colour("Overlay Border Color", {}, "", colors.border_colour, true, function(color)
+    colors.border_colour = color
 end))
 
 -- BACKGROUND COLOR --
@@ -127,8 +136,13 @@ menu.text_input(menu.my_root(), "Change Title", { "ChangeTitle" }, "", function(
     infoTitle = fuck
 end)
 
-menu.toggle(menu.my_root(), "Disable Top Border", {""}, "", function(on)
+menu.toggle(menu.my_root(), "Disable Title Bar", {""}, "", function(on)
     top_border_toggle = on
+    disable_title_border = on
+    util.yield()
+end)
+menu.toggle(menu.my_root(), "Disable Colour Border", {""}, "", function(on)
+    colour_border_toggle = on
     util.yield()
 end)
 
@@ -139,8 +153,26 @@ util.create_tick_handler(function()
             directx.draw_rect(position_change_X, position_change_Y, 0.11 / mapped_number, 0.03 / mapped_number, colors.top_border)
             directx.draw_text(position_change_X + ((0.11 / mapped_number) / 2), position_change_Y + ((0.03 / mapped_number) / 2), infoTitle, ALIGN_CENTRE, 0.45 / (mapped_number_text / 3.5), colors.subhead, true)
         end
+        if not colour_border_toggle then
+            if not disable_title_border then
+                 --the top thing
+                directx.draw_rect(position_change_X-0.001, position_change_Y-0.00 + (-0.001 / mapped_number), 0.112 / mapped_number, 0.0035 / mapped_number, colors.border_colour)
+                --the left thing
+                directx.draw_rect(position_change_X-0.0015, position_change_Y-0.001 + (0.0 / mapped_number), 0.0015 / mapped_number, 0.3145 / mapped_number, colors.border_colour)
+                --the right thing
+                directx.draw_rect(position_change_X+0.0919, position_change_Y-0.001 + (0.0 / mapped_number), 0.0015 / mapped_number, 0.3145 / mapped_number, colors.border_colour)
+            else
+                --the idfk under title bar thing
+                directx.draw_rect(position_change_X-0.001, position_change_Y-0.001 + (0.029 / mapped_number), 0.112 / mapped_number, 0.0020 / mapped_number, colors.border_colour)
+                --the left thing
+                directx.draw_rect(position_change_X-0.0015, position_change_Y-0.001 + (0.029 / mapped_number), 0.0015 / mapped_number, 0.2855 / mapped_number, colors.border_colour)
+                --the right thing
+                directx.draw_rect(position_change_X+0.0919, position_change_Y-0.001 + (0.029 / mapped_number), 0.0015 / mapped_number, 0.2855 / mapped_number, colors.border_colour)
+            end
+            --the bottom thing
+            directx.draw_rect(position_change_X-0.001, position_change_Y-0.002 + (0.312 / mapped_number), 0.112 / mapped_number, 0.0035 / mapped_number, colors.border_colour)
+        end
         directx.draw_rect(position_change_X, position_change_Y + (0.03 / mapped_number), 0.11 / mapped_number, 0.28 / mapped_number, colors.background_rect)
-
         local posX_left = position_change_X + 0.0035
         local player_info_offset = posX_left + (0.1 / mapped_number)
         local text_size = 0.40 / (mapped_number_text / 3)
